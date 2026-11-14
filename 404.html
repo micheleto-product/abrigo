@@ -3,22 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Abrigo - Redirecionando...</title>
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // Redireciona a URL atual para a raiz codificando o caminho como query parameter,
-      // permitindo que o index.html e o roteador recuperem a rota correta ao carregar.
-      var segmentCount = 1; // 1 para /abrigo/
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?p=/' +
-        l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
-    </script>
+    <title>Abrigo - Conectando Pessoas a Recursos de Apoio</title>
   </head>
   <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

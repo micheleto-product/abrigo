@@ -232,7 +232,7 @@ function MapPage() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-display text-3xl font-extrabold">Ajuda perto de você</p>
-                  <p className="text-muted-foreground">Comida, abrigo, roupas e saúde — de graça.</p>
+                  <p className="text-muted-foreground">Comida, abrigo, roupas e saúde de graça.</p>
                 </div>
                 <SpeakButton text={introSpeech} compact />
               </div>

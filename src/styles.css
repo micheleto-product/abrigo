@@ -2,10 +2,11 @@
  * Tailwind v4 entry. Keep every @import in this top block.
  * Web fonts load via <link> in src/routes/__root.tsx.
  */
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
 @import "leaflet/dist/leaflet.css";
+
+@source "../src";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -274,6 +275,7 @@
     background: var(--accent);
     border: 4px solid var(--card);
     box-shadow: var(--shadow-float-value);
+    transition: transform 160ms ease;
   }
   .abrigo-me__dot::after {
     content: "";

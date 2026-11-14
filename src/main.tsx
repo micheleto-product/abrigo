@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { RouterProvider } from '@tanstack/react-router';
-import { getRouter } from './router';
-import './styles.css';
-
-const router = getRouter();
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+// Trata o redirecionamento do GitHub Pages SPA (404.html)
+(function() {
+  var redirect = sessionStorage.redirect;
+  delete sessionStorage.redirect;
+  if (redirect && redirect != location.href) {
+    history.replaceState(null, null, redirect);
+  } else {
+    var q = window.location.search;
+    if (q && q.indexOf('?p=') === 0) {
+      var url = q.slice(3).replace(/~and~/g, '&');
+      window.history.replaceState(null, null, url.charAt(0) === '/' ? url : '/' + url);
+    }
+  }
+})();

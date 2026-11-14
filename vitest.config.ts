@@ -3,13 +3,18 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 
 export default defineConfig({
+  // Essencial para o GitHub Pages encontrar os caminhos dos arquivos em subpasta
+  base: '/abrigo/',
+  
   plugins: [react()],
+  
   test: {
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
   },
+  
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },
   },

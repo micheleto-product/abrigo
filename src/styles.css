@@ -1,42 +1,31 @@
 /*
- * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
- * - Keep every @import in this top block, above @theme and the rest of the file. Install an
- *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
- *   build resolves @import from the filesystem. Load those with a <link> in the head() of
- *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ * Tailwind v4 entry. Keep every @import in this top block.
+ * Web fonts load via <link> in src/routes/__root.tsx.
  */
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
- *
- * The design lives in this file: oklch color tokens on the shadcn variables
- * (--background, --foreground, --primary, --secondary, --muted, --accent, ...) plus
- * new tokens as needed, font tokens, and custom styles and animations.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Abrigo design system — warm, humane, high-contrast.
+ * Ink navy + warm cream base, terracotta accent, four category colors for map pins.
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-3xl: calc(var(--radius) + 14px);
+  --radius-4xl: calc(var(--radius) + 20px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -53,10 +42,26 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
+
+  --color-cat-food: var(--cat-food);
+  --color-cat-food-soft: var(--cat-food-soft);
+  --color-cat-shelter: var(--cat-shelter);
+  --color-cat-shelter-soft: var(--cat-shelter-soft);
+  --color-cat-clothes: var(--cat-clothes);
+  --color-cat-clothes-soft: var(--cat-clothes-soft);
+  --color-cat-health: var(--cat-health);
+  --color-cat-health-soft: var(--cat-health-soft);
+  --color-on-cat: var(--on-cat);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -70,77 +75,83 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --shadow-float: var(--shadow-float-value);
+  --shadow-card: var(--shadow-card-value);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 1rem;
+
+  --background: oklch(0.975 0.013 82);
+  --foreground: oklch(0.22 0.07 263);
+  --card: oklch(0.995 0.004 82);
+  --card-foreground: oklch(0.22 0.07 263);
+  --popover: oklch(0.995 0.004 82);
+  --popover-foreground: oklch(0.22 0.07 263);
+
+  --primary: oklch(0.25 0.09 263);
+  --primary-foreground: oklch(0.975 0.013 82);
+  --secondary: oklch(0.93 0.022 82);
+  --secondary-foreground: oklch(0.22 0.07 263);
+  --muted: oklch(0.945 0.016 82);
+  --muted-foreground: oklch(0.42 0.04 263);
+  --accent: oklch(0.57 0.17 40);
+  --accent-foreground: oklch(0.99 0.006 82);
+
+  --destructive: oklch(0.52 0.2 27);
+  --destructive-foreground: oklch(0.99 0.006 82);
+  --success: oklch(0.46 0.12 152);
+  --success-foreground: oklch(0.99 0.006 82);
+  --success-soft: oklch(0.94 0.05 152);
+  --warning: oklch(0.5 0.12 70);
+  --warning-soft: oklch(0.95 0.06 85);
+
+  --border: oklch(0.86 0.022 82);
+  --input: oklch(0.8 0.025 82);
+  --ring: oklch(0.57 0.17 40);
+
+  --cat-food: oklch(0.56 0.19 36);
+  --cat-food-soft: oklch(0.94 0.045 45);
+  --cat-shelter: oklch(0.48 0.16 258);
+  --cat-shelter-soft: oklch(0.94 0.035 258);
+  --cat-clothes: oklch(0.49 0.13 152);
+  --cat-clothes-soft: oklch(0.94 0.045 152);
+  --cat-health: oklch(0.48 0.18 308);
+  --cat-health-soft: oklch(0.94 0.04 308);
+  --on-cat: oklch(0.995 0.004 82);
+
+  --chart-1: oklch(0.56 0.19 36);
+  --chart-2: oklch(0.48 0.16 258);
+  --chart-3: oklch(0.49 0.13 152);
+  --chart-4: oklch(0.48 0.18 308);
+  --chart-5: oklch(0.25 0.09 263);
+
+  --sidebar: oklch(0.995 0.004 82);
+  --sidebar-foreground: oklch(0.22 0.07 263);
+  --sidebar-primary: oklch(0.25 0.09 263);
+  --sidebar-primary-foreground: oklch(0.975 0.013 82);
+  --sidebar-accent: oklch(0.93 0.022 82);
+  --sidebar-accent-foreground: oklch(0.22 0.07 263);
+  --sidebar-border: oklch(0.86 0.022 82);
+  --sidebar-ring: oklch(0.57 0.17 40);
+
+  --shadow-float-value: 0 18px 40px -16px color-mix(in oklab, var(--primary) 45%, transparent),
+    0 2px 6px -2px color-mix(in oklab, var(--primary) 20%, transparent);
+  --shadow-card-value: 0 1px 0 color-mix(in oklab, var(--primary) 8%, transparent),
+    0 8px 24px -14px color-mix(in oklab, var(--primary) 30%, transparent);
+
+  --gradient-warm: linear-gradient(160deg, oklch(0.25 0.09 263) 0%, oklch(0.32 0.11 263) 55%, oklch(0.45 0.14 35) 130%);
+
+  --bottom-nav-h: 4.75rem;
+  --top-nav-h: 0rem;
 }
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+@media (min-width: 768px) {
+  :root {
+    --bottom-nav-h: 0rem;
+    --top-nav-h: 4.25rem;
+  }
 }
 
 @layer base {
@@ -148,8 +159,151 @@
     border-color: var(--color-border);
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
   }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .page-pad {
+    padding-bottom: calc(var(--bottom-nav-h) + 1.5rem + env(safe-area-inset-bottom));
+  }
+
+  .map-viewport {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--top-nav-h);
+    bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
+  }
+
+  .bg-warm-gradient {
+    background-image: var(--gradient-warm);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Map pins (Leaflet divIcon) */
+  .abrigo-pin {
+    background: transparent;
+    border: 0;
+  }
+  .abrigo-pin__body {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px 9999px 9999px 4px;
+    transform: rotate(-45deg);
+    color: var(--on-cat);
+    border: 3px solid var(--card);
+    box-shadow: var(--shadow-float-value);
+    transition: transform 160ms ease;
+  }
+  .abrigo-pin__body svg {
+    transform: rotate(45deg);
+    width: 22px;
+    height: 22px;
+  }
+  .abrigo-pin--selected .abrigo-pin__body {
+    transform: rotate(-45deg) scale(1.28);
+    border-color: var(--foreground);
+  }
+  .abrigo-pin__star {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    background: var(--warning-soft);
+    color: var(--warning);
+    border: 2px solid var(--card);
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .pin-alimentos { background: var(--cat-food); }
+  .pin-abrigos { background: var(--cat-shelter); }
+  .pin-roupas { background: var(--cat-clothes); }
+  .pin-saude { background: var(--cat-health); }
+
+  .abrigo-me {
+    background: transparent;
+    border: 0;
+  }
+  .abrigo-me__dot {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    background: var(--accent);
+    border: 4px solid var(--card);
+    box-shadow: var(--shadow-float-value);
+  }
+  .abrigo-me__dot::after {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--accent) 35%, transparent);
+    animation: abrigo-pulse 2s ease-out infinite;
+    z-index: -1;
+  }
+
+  .leaflet-container {
+    font-family: var(--font-sans);
+    background: var(--muted);
+  }
+  .leaflet-control-attribution {
+    font-size: 10px;
+  }
+}
+
+@keyframes abrigo-pulse {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@utility animate-sheet-up {
+  animation: sheet-up 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }

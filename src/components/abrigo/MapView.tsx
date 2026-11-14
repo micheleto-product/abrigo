@@ -52,7 +52,7 @@ export default function MapView({ places, selectedId, onSelect, user, focus }: P
       minZoom: 4,
       maxZoom: 19,
     });
-    L.tileLayer(TILE_URL, { attribution: ATTRIBUTION, subdomains: "abcd", maxZoom: 19 }).addTo(map);
+   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }).addTo(map);
     if (window.matchMedia("(min-width: 768px)").matches) {
       L.control.zoom({ position: "bottomright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
     }
